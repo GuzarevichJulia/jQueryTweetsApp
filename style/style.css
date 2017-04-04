@@ -1,0 +1,40 @@
+body{
+    background-color: #f4f5f8;
+}
+
+#twitterImage{
+    width:80px;
+    height:80px;
+}
+
+.title{
+    background: linear-gradient(to right, white, #0178db);
+    color: white;
+    border-radius: 10px;
+    margin: 5px 10px;
+}
+
+#readCounter{
+    font-size: 20px;
+    margin-top: 25px;
+    margin-right: 10px;
+}
+
+.tweetsList{
+    margin-top: 40px;
+}
+
+.cell{
+    background-color: white;
+    border-radius: 10px;
+    padding: 5px;
+    margin: 10px 10px;
+}
+
+input{
+    margin-top: 3%;
+    color: white;
+    background-color: #5faae8;
+    border-radius: 10px;
+    padding: 5px 10px;
+}
