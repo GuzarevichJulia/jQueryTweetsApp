@@ -4,19 +4,6 @@
     <meta charset="utf-8"/>
     <link rel="stylesheet" href="bootstrap/content/Content/bootstrap.min.css">
     <link rel="stylesheet" href="Style/style.css">
-    <script id="tweetTemplate" type="text/x-jquery-tmpl">
-        <div class="tweet" id=${id}>
-            <div class="row">
-                <div class="col-md-4"></div>
-                <div class="col-xs-12 col-md-4 text-center">
-                    <div class="row  table-bordered cell">
-                        <div class="col-xs-12 col-md-12"><p class="text-left">${content}</p></div>
-                    </div>
-                </div>
-                <div class="col-md-4"></div>
-            </div>
-        </div>
-    </script>
 </head>
 <body>
 <div class="row">
@@ -45,11 +32,24 @@
     <div class="col-md-4"></div>
 </div>
 
+<script id="tweetTemplate" type="text/x-jquery-tmpl">
+        <div class="tweet" id=${id}>
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-xs-12 col-md-4 text-center">
+                    <div class="row  table-bordered cell">
+                        <div class="col-xs-12 col-md-12"><p class="text-left">${content}</p></div>
+                    </div>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+        </div>
+    </script>
 <script src="bootstrap/content/Scripts/jquery-1.10.2.min.js"></script>
 <script src="bootstrap/content/Scripts/bootstrap.min.js"></script>
 <script type="text/javascript" src="scripts/codebird.js"></script>
 <script type="text/javascript" src="scripts/jquery.tmpl.min.js"></script>
-<script type="text/javascript" src="Scripts/jquery.getTweets.js"></script>
+<script type="text/javascript" src="Scripts/getTweets.js"></script>
 <script type="text/javascript" src="Scripts/tweetsList.js"></script>
 </body>
 </html>

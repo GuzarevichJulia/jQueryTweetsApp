@@ -1,4 +1,5 @@
 var tweetsLoader = (function () {
+    'use strict';
 
     var newTweetsArray = [];
     var newTweetsId = [];
@@ -7,6 +8,8 @@ var tweetsLoader = (function () {
     var storage = localStorage;
     var readTweetsInStorage = [];
     var readTweetsIdInStorage = [];
+    var readCounterElement = $("#readCounter");
+    var tweetsContainer = $(".tweets-list");
     var readTweetsId = getDataFromStorage(readTweetsIdKey);
     if (readTweetsId != null) {
         readTweetsIdInStorage = readTweetsId;
@@ -21,9 +24,16 @@ var tweetsLoader = (function () {
     cb.setConsumerKey("QZIkKMeTgJpuZLSsimOexemM8", "3SUFIytalLPqkwu9yDlmq39eWaVOWC4lNFeguzL4ShUu6WtleB");
     cb.setToken("847033435046731778-WOazCo1yxIF7jHbanPgWdEEbSc6y00y", "LBOIsKmTMDdbEbFAPOB65Gpyh5vedeCbpNoMtEv4VTBku");
 
+    var readButtonClickHandler = function(readButtonElement) {
+        increaseReadCounter();
+        putInClientStorage(readButtonElement);
+        deleteReadTweet(readButtonElement);
+    }
+
     return {
         getReadTweetsCount: function () {
-            $("#readCounter").text( readTweetsInStorage.length > 0 ? readTweetsInStorage.length : 0);
+            var length = readTweetsInStorage.length > 0 ? readTweetsInStorage.length : 0;
+            readCounterElement.text(length);
         },
 
         getNewTweets: function () {
@@ -60,17 +70,16 @@ var tweetsLoader = (function () {
         $("#readCounter").text(parseInt($("#readCounter").text())+1);
     }
 
-    function deleteReadTweet(event) {
-        $(event.currentTarget).closest(".tweet").remove();
+    function deleteReadTweet(button) {
+        button.closest(".tweet").remove();
     }
 
-    function putInClientStorage(event) {
-        var currentTarget = event.currentTarget;
-        var readTweetText = $(currentTarget).parent().prev().children()[0].textContent;
+    function putInClientStorage(button) {
+        var readTweetText = button.parent().prev().children()[0].textContent;
         readTweetsInStorage.push(readTweetText);
-        readTweetsIdInStorage.push(String(currentTarget.name));
+        readTweetsIdInStorage.push(String(button.attr("name")));
         newTweetsArray.splice(newTweetsArray.indexOf(readTweetText), 1);
-        newTweetsId.splice(newTweetsId.indexOf(String(currentTarget.name)), 1);
+        newTweetsId.splice(newTweetsId.indexOf(String(button.attr("name"))), 1);
         storage.setItem(readTweetsKey, JSON.stringify(readTweetsInStorage));
         storage.setItem(readTweetsIdKey, JSON.stringify(readTweetsIdInStorage));
     }
@@ -83,7 +92,8 @@ var tweetsLoader = (function () {
                 content: contentArray[i]
             };
             tweetsData.push(tweetObject);
-        };
+        }
+        ;
 
         $(function () {
             $('#tweetTemplate').tmpl(tweetsData).appendTo('.tweets-list');
@@ -93,12 +103,9 @@ var tweetsLoader = (function () {
     function displayNewTweets(newTweetsArray, newTweetsId) {
         if (!isDisplayed) {
             useTemplate(newTweetsId, newTweetsArray);
-            var buttons = $("[value=Read]");
-            for (var i = 0; i < buttons.length; i++) {
-                buttons[i].addEventListener("click", increaseReadCounter);
-                buttons[i].addEventListener("click", deleteReadTweet);
-                buttons[i].addEventListener("click", putInClientStorage);
-            };
+            $(".read-button").bind("click", function() {
+                readButtonClickHandler($(this));
+            });
         }
     }
 
@@ -128,6 +135,7 @@ var tweetsLoader = (function () {
             return true;
         }
     }
+
 })();
 
 
